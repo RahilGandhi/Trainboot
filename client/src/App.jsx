@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Home, Dashboard, Player, AccessCode, Discover } from "./pages";
+import { Home, Dashboard, Player, AccessCode, Discover, Tasks } from "./pages";
 import { SharedLayout } from "./components";
 import { useAuth0 } from "@auth0/auth0-react";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
@@ -36,6 +36,15 @@ const App = () => {
           element={
             <PrivateRoute>
               <Discover />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/tasks"
+          element={
+            <PrivateRoute>
+              <Tasks />
             </PrivateRoute>
           }
         />
