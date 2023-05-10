@@ -108,7 +108,7 @@ const Task = () => {
           <div className="py-4 px-8">
             <button
               className="flex items-center gap-x-2"
-              onClick={() => navigate(-1)}
+              onClick={() => navigate("/")}
             >
               <IoChevronBackSharp /> Back
             </button>

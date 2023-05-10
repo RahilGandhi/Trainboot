@@ -6,6 +6,7 @@ import { AiOutlineBars } from "react-icons/ai";
 import { FiPlusSquare } from "react-icons/fi";
 import { GrTasks } from "react-icons/gr";
 import { TfiAnnouncement } from "react-icons/tfi";
+import { FaUserTie } from "react-icons/fa";
 
 export const navLinks = [
   {
@@ -58,9 +59,9 @@ export const heroSidebarLinks = [
   },
   {
     id: uid(),
-    name: "settings",
-    icon: <FiSettings />,
-    href: "#",
+    name: "Employees",
+    icon: <FaUserTie />,
+    href: "/employees",
   },
 ];
 

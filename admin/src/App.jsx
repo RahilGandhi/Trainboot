@@ -1,5 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Dashboard, AccessCode, Announcement, Task, Training } from "./pages";
+import {
+  Dashboard,
+  AccessCode,
+  Announcement,
+  Task,
+  Training,
+  Employees,
+} from "./pages";
 import { SharedLayout } from "./components";
 import { useAuth0 } from "@auth0/auth0-react";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
@@ -52,6 +59,15 @@ const App = () => {
           element={
             <PrivateRoute>
               <Task />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/employees"
+          element={
+            <PrivateRoute>
+              <Employees />
             </PrivateRoute>
           }
         />

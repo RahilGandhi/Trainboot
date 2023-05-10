@@ -24,7 +24,7 @@ export const navLinks = [
   {
     id: uid(),
     name: "Admin",
-    href: "http://localhost:3001",
+    href: "https://admin-trainboot.netlify.app",
   },
 ];
 
@@ -46,12 +46,6 @@ export const heroSidebarLinks = [
     name: "tasks",
     icon: <TfiHeadphoneAlt />,
     href: "/tasks",
-  },
-  {
-    id: uid(),
-    name: "settings",
-    icon: <FiSettings />,
-    href: "#",
   },
 ];
 

@@ -1,41 +1,31 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { heroSidebarLinks } from "../../utils/helper";
 import { Link, useNavigate } from "react-router-dom";
-import { AiOutlineAlignLeft } from "react-icons/ai";
-import { useAuth0 } from "@auth0/auth0-react";
-import { IoChevronBackSharp } from "react-icons/io5";
+import { AiOutlineAlignLeft, AiFillExclamationCircle } from "react-icons/ai";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import moment from "moment";
+import { IoChevronBackSharp } from "react-icons/io5";
+import { BsCheckCircleFill } from "react-icons/bs";
 
-const Announcement = () => {
+const Employees = () => {
   const { logout, user } = useAuth0();
-  const [values, setValues] = useState({
-    title: "",
-    time: "",
-    deadline: "",
-  });
   const navigate = useNavigate();
+  const [users, setUsers] = useState([]);
+  const [collapse, setCollapse] = useState(true);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post(
-        "https://trainboot-server.onrender.com/announcements/create",
-        {
-          title: values.title,
-          date: moment(values.deadline).format("DD-MM-YY"),
-          time: values.time,
-        }
-      );
-      setValues({
-        title: "",
-        time: "",
-        deadline: "",
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  useEffect(() => {
+    const getEmployees = async () => {
+      try {
+        const { data } = await axios.get(
+          "https://trainboot-server.onrender.com/employees/all"
+        );
+        setUsers(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getEmployees();
+  }, []);
 
   return (
     <main className="min-h-screen">
@@ -105,60 +95,84 @@ const Announcement = () => {
               <IoChevronBackSharp /> Back
             </button>
 
-            <form
-              className="w-1/2 mt-10 flex flex-col gap-y-4"
-              onSubmit={handleSubmit}
-            >
-              <h1 className="text-xl">Create New Announcement</h1>
-              <div className="flex flex-col gap-y-1">
-                <label htmlFor="title">Title</label>
-                <input
-                  type="text"
-                  className="bg-transparent border-2 p-1 rounded-lg"
-                  placeholder="Title"
-                  required
-                  value={values.title}
-                  onChange={(e) =>
-                    setValues({ ...values, title: e.target.value })
-                  }
-                />
-              </div>
+            <div className="mt-6">
+              <h1 className="text-xl">View Employees</h1>
 
-              <div className="flex flex-col gap-y-1">
-                <label htmlFor="time">Time</label>
-                <input
-                  type="time"
-                  id="time"
-                  value={values.time}
-                  required
-                  className="bg-transparent border-2 p-1 rounded-lg"
-                  onChange={(e) =>
-                    setValues({ ...values, time: e.target.value })
-                  }
-                />
-              </div>
+              <div className="mt-8 grid gap-y-2">
+                {users.length > 0 ? (
+                  users.map(
+                    ({
+                      firstName,
+                      lastName,
+                      deptId,
+                      deptName,
+                      email,
+                      completedTrainings,
+                      ongoingTrainings,
+                      tasksCompleted,
+                      _id,
+                    }) => {
+                      return (
+                        <div
+                          key={_id}
+                          className="bg-white rounded-lg py-4 px-4"
+                        >
+                          <div className="flex gap-x-2 items-center">
+                            <h1 className="text-xl">
+                              {firstName} {lastName}
+                            </h1>
+                            -<p>{deptName}</p> -<p>{deptId}</p> - <p>{email}</p>
+                          </div>
 
-              <div className="flex flex-col gap-y-1">
-                <label htmlFor="deadline">Deadline</label>
-                <input
-                  type="date"
-                  name=""
-                  id="deadline"
-                  className="bg-transparent border-2 p-1"
-                  required
-                  value={values.deadline}
-                  onChange={(e) =>
-                    setValues({ ...values, deadline: e.target.value })
-                  }
-                />
-              </div>
+                          <div className="mt-2">
+                            <h1 className="mb-1 text-gray-600">
+                              Completed Trainings -{" "}
+                            </h1>
+                            {completedTrainings.map(({ name, _id }) => {
+                              return (
+                                <div
+                                  key={_id}
+                                  className="flex items-center gap-x-1 ml-5"
+                                >
+                                  <BsCheckCircleFill className="text-green-500" />
+                                  <p>{name}</p>
+                                </div>
+                              );
+                            })}
+                          </div>
 
-              <div>
-                <button className="bg-black text-white px-4 rounded-lg py-1 mt-3">
-                  Create Announcement
-                </button>
+                          <div className="mt-2">
+                            <h1 className="mb-1 text-gray-600">
+                              Ongoing Trainings -{" "}
+                            </h1>
+                            {ongoingTrainings.map(({ name, _id }) => {
+                              return (
+                                <div
+                                  key={_id}
+                                  className="flex items-center gap-x-1 ml-5"
+                                >
+                                  <AiFillExclamationCircle className="text-yellow-600" />
+                                  <p>{name}</p>
+                                </div>
+                              );
+                            })}
+                          </div>
+
+                          <div className="mt-2">
+                            <h1 className="mb-1 text-gray-600">
+                              Tasks Completed -{" "}
+                            </h1>
+                            <p className="ml-5">{tasksCompleted}</p>
+                          </div>
+                        </div>
+                      );
+                    }
+                  )
+                ) : (
+                  <h3 className="text-center">No Employees Present</h3>
+                )}
               </div>
-            </form>
+            </div>
           </div>
         </section>
       </section>
@@ -166,4 +180,4 @@ const Announcement = () => {
   );
 };
 
-export default Announcement;
+export default Employees;

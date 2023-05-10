@@ -19,7 +19,6 @@ const Dashboard = () => {
       const { data } = await axios.get(
         "https://trainboot-server.onrender.com/trainings/all"
       );
-      console.log(data);
       setVideoDetails([...data]);
     };
     getVideos();
@@ -305,7 +304,7 @@ const Dashboard = () => {
                 <h1 className="text-xl mb-5 text-[#1E1E1E]">Announcements</h1>
                 <div className="flex flex-col gap-y-8 bg-white rounded-xl p-4">
                   {announcements.length > 0 ? (
-                    announcements.map(({ date, title }, index) => {
+                    announcements.map(({ date, title, time }, index) => {
                       return (
                         <div key={uid()} className=" flex items-center gap-x-4">
                           <div
@@ -320,7 +319,7 @@ const Dashboard = () => {
                           <div>
                             <p>{title}</p>
                             <p className="text-xs text-grey-secondary">
-                              {date}
+                              {date} -- {time}
                             </p>
                           </div>
                         </div>
