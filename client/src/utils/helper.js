@@ -23,8 +23,8 @@ export const navLinks = [
 
   {
     id: uid(),
-    name: "contact",
-    href: "/contact",
+    name: "Admin",
+    href: "http://localhost:3001",
   },
 ];
 
@@ -45,7 +45,7 @@ export const heroSidebarLinks = [
     id: uid(),
     name: "tasks",
     icon: <TfiHeadphoneAlt />,
-    href: "#",
+    href: "/tasks",
   },
   {
     id: uid(),

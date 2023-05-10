@@ -1,20 +1,22 @@
-import { Link, useParams } from "react-router-dom";
+import { heroSidebarLinks } from "../../utils/helper";
+import { Link, NavLink } from "react-router-dom";
 import { AiOutlineAlignLeft } from "react-icons/ai";
-import { BiArrowBack } from "react-icons/bi";
-import { heroSidebarLinks, videoCards } from "../../utils/helper";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useNavigate } from "react-router-dom";
+import { IoChevronBackSharp } from "react-icons/io5";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-const Player = () => {
-  const { logout } = useAuth0();
-  const { id } = useParams();
-  const [video, setVideo] = videoCards.filter(({ id: vid }) => vid === id);
-  const navigate = useNavigate();
+const Announcement = () => {
+  const { logout, user } = useAuth0();
+  const [employees, setEmployees] = useState([]);
+  const [values, setValues] = useState({ desc: "", emp: "none", deadline: "" });
+
+  const handleSubmit = () => {};
 
   return (
     <main className="min-h-screen">
       <section className="grid grid-cols-[250px_1fr]">
-        <aside className="bg-black h-screen py-10 px-4 grid gap-y-14 content-start sticky top-0 left-0">
+        <aside className="bg-black h-full py-10 px-4 min-h-screen grid gap-y-14 content-start sticky top-0 left-0">
           <div>
             <svg
               width="163"
@@ -54,9 +56,12 @@ const Player = () => {
 
         <section className="bg-grey-primary">
           <nav className="bg-white flex justify-between py-6 px-8">
-            <button className="text-2xl" onClick={() => navigate(-1)}>
-              <BiArrowBack />
-            </button>
+            <div className="flex items-center gap-x-5">
+              <button className="text-2xl">
+                <AiOutlineAlignLeft />
+              </button>
+              <p className="capitalize">Hi, Admin</p>
+            </div>
 
             <button
               className="btn text-white"
@@ -68,47 +73,78 @@ const Player = () => {
             </button>
           </nav>
 
-          <div className="py-12 px-24">
-            <div className="relative pt-[56.25%]">
-              <iframe
-                title={video.name}
-                src={video.src}
-                loading="lazy"
-                className="border-none absolute top-0 h-[30rem] rounded-lg w-full"
-                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; "
-                allowfullscreen="true"
-              ></iframe>
-            </div>
+          <div className="py-4 px-8">
+            <button className="flex items-center gap-x-2">
+              <IoChevronBackSharp /> Back
+            </button>
 
-            <div>
-              <div className="mb-5">
-                <h1 className="text-3xl font-semibold mb-3">{video.name}</h1>
-                <p className="text-grey-secondary text-lg">
-                  Video Id : #{video.id}
-                </p>
-                <p className="text-grey-secondary text-lg">
-                  By :{" "}
-                  <span className="text-black font-semibold">
-                    {video.instructor}
-                  </span>
-                </p>
+            <form
+              className="w-1/2 mt-10 flex flex-col gap-y-4"
+              onSubmit={handleSubmit}
+            >
+              <h1 className="text-xl">Assign a Task</h1>
+              <div className="flex flex-col gap-y-1">
+                <label htmlFor="desc">Description</label>
+                <textarea
+                  rows={5}
+                  type="text"
+                  className="bg-transparent border-2 p-1 rounded-lg"
+                  placeholder="Description....."
+                  style={{ resize: "none" }}
+                  required
+                  value={values.desc}
+                  onChange={(e) =>
+                    setValues({ ...values, desc: e.target.value })
+                  }
+                />
               </div>
 
-              <div className="flex gap-x-4 items-center mb-6 text-lg">
-                <button className="bg-orange-primary px-6 text-white text-lg py-3 rounded-3xl">
-                  Information
+              <div className="flex flex-col gap-y-1">
+                <label htmlFor="emp" className="block">
+                  Employee
+                </label>
+                <select
+                  name="emp"
+                  id="emp"
+                  className="w-full bg-transparent border-2 p-1"
+                  required
+                  value={values.emp}
+                  onChange={(e) =>
+                    setValues({ ...values, emp: e.target.value })
+                  }
+                >
+                  <option value="none">Employees</option>
+                  {employees.map(({ firstName, lastName, email, _id }) => {
+                    return (
+                      <option key={_id} value={email}>
+                        {firstName} {lastName}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+
+              <div className="flex flex-col gap-y-1">
+                <label htmlFor="deadline">Deadline</label>
+                <input
+                  type="date"
+                  name=""
+                  id="deadline"
+                  className="bg-transparent border-2 p-1"
+                  required
+                  value={values.deadline}
+                  onChange={(e) =>
+                    setValues({ ...values, deadline: e.target.value })
+                  }
+                />
+              </div>
+
+              <div>
+                <button className="bg-black text-white px-4 rounded-lg py-1 mt-3">
+                  Create Task
                 </button>
-                <p className="font-semibold">Training</p>
-                <p>🔐 Organization</p>
               </div>
-
-              <div
-                className="summary"
-                dangerouslySetInnerHTML={{
-                  __html: video.summary,
-                }}
-              ></div>
-            </div>
+            </form>
           </div>
         </section>
       </section>
@@ -116,4 +152,4 @@ const Player = () => {
   );
 };
 
-export default Player;
+export default Announcement;

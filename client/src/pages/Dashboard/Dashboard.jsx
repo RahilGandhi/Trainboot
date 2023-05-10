@@ -1,19 +1,17 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import {
-  heroSidebarLinks,
-  videoCards,
-  AnnouncementCards,
-} from "../../utils/helper";
+import { heroSidebarLinks } from "../../utils/helper";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineAlignLeft } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import { CgNotes } from "react-icons/cg";
 import axios from "axios";
+import { v4 as uid } from "uuid";
 
 const Dashboard = () => {
   const { logout, user } = useAuth0();
   const [videoDetails, setVideoDetails] = useState([]);
   const [trainngsAnalysis, setTrainngsAnalysis] = useState({});
+  const [announcements, setAnnouncements] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,6 +32,20 @@ const Dashboard = () => {
       setTrainngsAnalysis({ ...data });
     };
     getAnalysis();
+  }, []);
+
+  useEffect(() => {
+    const getAnnouncements = async () => {
+      try {
+        const { data } = await axios.get(
+          "https://trainboot-server.onrender.com/announcements/all"
+        );
+        setAnnouncements(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getAnnouncements();
   }, []);
 
   const handleStartTraining = async (tid) => {
@@ -192,7 +204,9 @@ const Dashboard = () => {
                   </svg>
 
                   <div>
-                    <h1 className="text-3xl">0</h1>
+                    <h1 className="text-3xl">
+                      {trainngsAnalysis.tasksCompleted}
+                    </h1>
                     <p className="text-sm text-grey-secondary">
                       Tasks Completed
                     </p>
@@ -292,27 +306,31 @@ const Dashboard = () => {
               <div>
                 <h1 className="text-xl mb-5 text-[#1E1E1E]">Announcements</h1>
                 <div className="flex flex-col gap-y-8 bg-white rounded-xl p-4">
-                  {AnnouncementCards.map(({ id, name, duration }, index) => {
-                    return (
-                      <div key={id} className=" flex items-center gap-x-4">
-                        <div
-                          className={`${
-                            index % 2 === 0
-                              ? "bg-blue-secondary"
-                              : "bg-[#FFE4E4]"
-                          } py-4 px-5 rounded-lg`}
-                        >
-                          <CgNotes className="text-xl" />
+                  {announcements.length > 0 ? (
+                    announcements.map(({ date, title }, index) => {
+                      return (
+                        <div key={uid()} className=" flex items-center gap-x-4">
+                          <div
+                            className={`${
+                              index % 2 === 0
+                                ? "bg-blue-secondary"
+                                : "bg-[#FFE4E4]"
+                            } py-4 px-5 rounded-lg`}
+                          >
+                            <CgNotes className="text-xl" />
+                          </div>
+                          <div>
+                            <p>{title}</p>
+                            <p className="text-xs text-grey-secondary">
+                              {date}
+                            </p>
+                          </div>
                         </div>
-                        <div>
-                          <p>{name}</p>
-                          <p className="text-xs text-grey-secondary">
-                            {duration}
-                          </p>
-                        </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })
+                  ) : (
+                    <h2>No announcements yet</h2>
+                  )}
                 </div>
               </div>
             </div>

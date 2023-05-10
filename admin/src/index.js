@@ -4,6 +4,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import { AppProvider } from "./context/AppContext";
 import { Auth0Provider } from "@auth0/auth0-react";
+import { ToastContainer } from "react-toastify";
 
 const Index = () => {
   return (

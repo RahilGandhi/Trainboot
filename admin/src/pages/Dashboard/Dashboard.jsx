@@ -1,22 +1,33 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import {
-  heroSidebarLinks,
-  videoCards,
-  AnnouncementCards,
-} from "../../utils/helper";
+import { heroSidebarLinks } from "../../utils/helper";
 import { Link } from "react-router-dom";
-import { AiOutlineAlignLeft } from "react-icons/ai";
-import { useState } from "react";
-import { CgNotes } from "react-icons/cg";
+import { AiOutlineAlignLeft, AiOutlinePlus } from "react-icons/ai";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { quickActionCards } from "../../utils/helper";
 
 const Dashboard = () => {
   const { logout, user } = useAuth0();
-  const [videoDetails] = useState([...videoCards]);
+  const [trainingAnalysis, setTrainingAnalysis] = useState({});
+
+  useEffect(() => {
+    const getAnalysis = async () => {
+      try {
+        const { data } = await axios.get(
+          "https://trainboot-server.onrender.com/admin/init"
+        );
+        setTrainingAnalysis(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getAnalysis();
+  }, []);
 
   return (
     <main className="min-h-screen">
       <section className="grid grid-cols-[250px_1fr]">
-        <aside className="bg-black h-full py-10 px-4 grid gap-y-14 content-start sticky top-0 left-0">
+        <aside className="bg-black h-full py-10 px-4 min-h-screen grid gap-y-14 content-start sticky top-0 left-0">
           <div>
             <svg
               width="163"
@@ -60,7 +71,7 @@ const Dashboard = () => {
               <button className="text-2xl">
                 <AiOutlineAlignLeft />
               </button>
-              <p className="capitalize">Hi, {user.given_name}</p>
+              <p className="capitalize">Hi, Admin</p>
             </div>
 
             <button
@@ -74,7 +85,214 @@ const Dashboard = () => {
           </nav>
 
           <div className="py-4 px-8">
-            <div className="grid grid-cols-[3fr_1fr] gap-x-10"></div>
+            <div className="grid grid-cols-4 gap-x-5 mb-20">
+              <div className="bg-white rounded-xl px-5 py-8">
+                <div className="flex items-center gap-x-4">
+                  <svg
+                    width="48"
+                    height="48"
+                    viewBox="0 0 48 48"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect
+                      width="48"
+                      height="48"
+                      rx="24"
+                      fill="url(#paint0_linear_106_1300)"
+                    />
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M15 17C15 15.8954 15.8954 15 17 15H31C32.1046 15 33 15.8954 33 17V31C33 32.1046 32.1046 33 31 33H17C15.8954 33 15 32.1046 15 31V17ZM17 17H19V18C19 19.6568 20.3432 21 22 21H26C27.6569 21 29 19.6568 29 18V17H31V31H17V17ZM21 18V17H27V18C27 18.5523 26.5523 19 26 19H22C21.4477 19 21 18.5523 21 18ZM20 23C19.4477 23 19 23.4477 19 24C19 24.5523 19.4477 25 20 25H27.9595C28.5118 25 28.9595 24.5523 28.9595 24C28.9595 23.4477 28.5118 23 27.9595 23H20ZM20.0405 27.0665C19.4882 27.0665 19.0405 27.5142 19.0405 28.0665C19.0405 28.6188 19.4882 29.0665 20.0405 29.0665H28C28.5523 29.0665 29 28.6188 29 28.0665C29 27.5142 28.5523 27.0665 28 27.0665H20.0405Z"
+                      fill="white"
+                    />
+                    <defs>
+                      <linearGradient
+                        id="paint0_linear_106_1300"
+                        x1="48"
+                        y1="0"
+                        x2="0"
+                        y2="48"
+                        gradientUnits="userSpaceOnUse"
+                      >
+                        <stop stopColor="#BB65FF" />
+                        <stop offset="1" stopColor="#4C6FFF" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                  <div>
+                    <h1 className="text-3xl">
+                      {trainingAnalysis.totalEmployees}
+                    </h1>
+                    <p className="text-sm text-grey-secondary">
+                      Total Employees
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-white rounded-xl px-4 py-8">
+                <div className="flex items-center gap-x-4">
+                  <svg
+                    width="48"
+                    height="48"
+                    viewBox="0 0 48 48"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect
+                      width="48"
+                      height="48"
+                      rx="24"
+                      fill="url(#paint0_linear_106_1325)"
+                    />
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M31 21C31 23.3787 29.8135 25.4804 28 26.7453V34H25.4142L24 32.5858L22.5858 34H20V26.7453C18.1865 25.4804 17 23.3787 17 21C17 17.134 20.134 14 24 14C27.866 14 31 17.134 31 21ZM29 21C29 23.7614 26.7614 26 24 26C21.2386 26 19 23.7614 19 21C19 18.2386 21.2386 16 24 16C26.7614 16 29 18.2386 29 21ZM22 31.7573L24 29.7573L26 31.7574V27.7101C25.3663 27.8987 24.695 28 24 28C23.305 28 22.6337 27.8987 22 27.7101V31.7573Z"
+                      fill="white"
+                    />
+                    <defs>
+                      <linearGradient
+                        id="paint0_linear_106_1325"
+                        x1="48"
+                        y1="0"
+                        x2="0"
+                        y2="48"
+                        gradientUnits="userSpaceOnUse"
+                      >
+                        <stop stopColor="#FFA674" />
+                        <stop offset="1" stopColor="#FF3737" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+
+                  <div>
+                    <h1 className="text-3xl">
+                      {trainingAnalysis.announcemnts}
+                    </h1>
+                    <p className="text-sm text-grey-secondary">Announcements</p>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-white rounded-xl px-4 py-8">
+                <div className="flex items-center gap-x-4">
+                  <svg
+                    width="48"
+                    height="48"
+                    viewBox="0 0 48 48"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect
+                      width="48"
+                      height="48"
+                      rx="24"
+                      fill="url(#paint0_linear_106_1342)"
+                    />
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M13.4142 28.4322L12 27.018L19.0711 19.9469L25.435 26.3109L29.6777 22.0682L27.9353 20.3259L34.6274 18.5327L32.8343 25.2248L31.0919 23.4825L25.435 29.1393L19.0711 22.7754L13.4142 28.4322Z"
+                      fill="white"
+                    />
+                    <defs>
+                      <linearGradient
+                        id="paint0_linear_106_1342"
+                        x1="48"
+                        y1="0"
+                        x2="0"
+                        y2="48"
+                        gradientUnits="userSpaceOnUse"
+                      >
+                        <stop stopColor="#FF974D" />
+                        <stop offset="1" stopColor="#FFE925" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                  <div>
+                    <h1 className="text-3xl">
+                      {trainingAnalysis.ongoingTrainings}
+                    </h1>
+                    <p className="text-sm text-grey-secondary">
+                      Trainings in Progress
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-xl px-4 py-8">
+                <div className="flex items-center gap-x-4">
+                  <svg
+                    width="48"
+                    height="39"
+                    viewBox="0 0 48 39"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect
+                      y="0.223633"
+                      width="48"
+                      height="38.7578"
+                      rx="19.3789"
+                      fill="url(#paint0_linear_512_87)"
+                    />
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M16 26.8696H18V18.7951H24V20.41H32V13.9504H25V12.3354H16V26.8696ZM24 13.9504H18V17.1802H25V18.7951H30V15.5653H24V13.9504Z"
+                      fill="white"
+                    />
+                    <defs>
+                      <linearGradient
+                        id="paint0_linear_512_87"
+                        x1="24"
+                        y1="0.223633"
+                        x2="24"
+                        y2="38.9814"
+                        gradientUnits="userSpaceOnUse"
+                      >
+                        <stop stopColor="#20AF62" />
+                        <stop offset="1" stopColor="#17E783" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+
+                  <div>
+                    <h1 className="text-3xl">
+                      {trainingAnalysis.completedTrainings}
+                    </h1>
+                    <p className="text-sm text-grey-secondary">
+                      Trainings Completed
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h1>Quick Actions</h1>
+              <section className="grid gap-y-3 content-start bg-white mt-4 min-h-[25rem] rounded-lg p-5">
+                {quickActionCards.map(({ id, name, icon, href }) => {
+                  return (
+                    <div
+                      key={id}
+                      className="grid grid-cols-[auto_1fr_auto] gap-x-2 items-center bg-[#E9EDFF] p-3 rounded-lg"
+                    >
+                      {icon}
+                      <h3 className="capitalize">{name}</h3>
+                      <Link
+                        to={href}
+                        className="flex gap-x-2 px-4 py-1 items-center bg-[#24285B] text-white rounded-lg "
+                      >
+                        <AiOutlinePlus />
+                        Add
+                      </Link>
+                    </div>
+                  );
+                })}
+              </section>
+            </div>
           </div>
         </section>
       </section>

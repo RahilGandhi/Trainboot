@@ -1,6 +1,7 @@
-import Home from "./Home/Home";
 import Dashboard from "./Dashboard/Dashboard";
-import Player from "./Dashboard/Player";
 import AccessCode from "./AccessCode/AccessCode";
+import Announcement from "./Announcement/Announcement";
+import Task from "./Task/Task";
+import Training from "./Training/Training";
 
-export { Home, Dashboard, Player, AccessCode };
+export { Dashboard, AccessCode, Announcement, Task, Training };

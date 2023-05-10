@@ -3,6 +3,9 @@ import { IoHomeOutline } from "react-icons/io5";
 import { FiMessageCircle, FiSettings } from "react-icons/fi";
 import { TfiHeadphoneAlt } from "react-icons/tfi";
 import { AiOutlineBars } from "react-icons/ai";
+import { FiPlusSquare } from "react-icons/fi";
+import { GrTasks } from "react-icons/gr";
+import { TfiAnnouncement } from "react-icons/tfi";
 
 export const navLinks = [
   {
@@ -37,21 +40,21 @@ export const heroSidebarLinks = [
   },
   {
     id: uid(),
-    name: "discover",
+    name: "Training",
     icon: <AiOutlineBars />,
-    href: "#",
+    href: "/add-new-training",
   },
   {
     id: uid(),
-    name: "messages",
+    name: "Announcement",
     icon: <FiMessageCircle />,
-    href: "#",
+    href: "/create-announcement",
   },
   {
     id: uid(),
     name: "tasks",
     icon: <TfiHeadphoneAlt />,
-    href: "#",
+    href: "/assign-task",
   },
   {
     id: uid(),
@@ -220,5 +223,26 @@ export const AnnouncementCards = [
     id: uid(),
     name: "Weekly report",
     duration: "04:30 pm - 05:00 pm",
+  },
+];
+
+export const quickActionCards = [
+  {
+    id: uid(),
+    name: "add new training",
+    icon: <FiPlusSquare />,
+    href: "/add-new-training",
+  },
+  {
+    id: uid(),
+    name: "create an announcement",
+    icon: <GrTasks />,
+    href: "/create-announcement",
+  },
+  {
+    id: uid(),
+    name: "Assign a Task",
+    icon: <TfiAnnouncement />,
+    href: "/assign-task",
   },
 ];

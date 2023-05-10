@@ -1,36 +1,44 @@
-import { AiOutlineAlignLeft } from "react-icons/ai";
-import { useAuth0 } from "@auth0/auth0-react";
 import { heroSidebarLinks } from "../../utils/helper";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { AiOutlineAlignLeft } from "react-icons/ai";
+import { useAuth0 } from "@auth0/auth0-react";
+import { IoChevronBackSharp } from "react-icons/io5";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { GrTasks } from "react-icons/gr";
-import { BsCheckCircleFill } from "react-icons/bs";
 
-const Tasks = () => {
+const Task = () => {
   const { logout, user } = useAuth0();
-  const [assigned, setAssigned] = useState(true);
-  const [tasks, setTasks] = useState([]);
+  const [employees, setEmployees] = useState([]);
+  const [values, setValues] = useState({ desc: "", emp: "none", deadline: "" });
 
   useEffect(() => {
-    const getTasks = async () => {
+    const getEmployees = async () => {
       try {
         const { data } = await axios.get(
-          `https://trainboot-server.onrender.com/tasks/${user.email}`
+          "https://trainboot-server.onrender.com/employees/all"
         );
-        setTasks(data);
+        setEmployees(data);
       } catch (error) {
         console.log(error);
       }
     };
-    getTasks();
-  }, [tasks]);
+    getEmployees();
+  }, []);
 
-  const handleMarkAsCompleted = async (id) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (values.emp === "none") return;
+
     try {
-      await axios.post(`https://trainboot-server.onrender.com/tasks/complete`, {
-        id,
-      });
+      await axios.post(
+        "https://trainboot-server.onrender.com/tasks/createTask",
+        {
+          description: values.desc,
+          assignedTo: values.emp,
+          deadline: values.deadline,
+        }
+      );
+      setValues({ desc: "", emp: "none", deadline: "" });
     } catch (error) {
       console.log(error);
     }
@@ -39,7 +47,7 @@ const Tasks = () => {
   return (
     <main className="min-h-screen">
       <section className="grid grid-cols-[250px_1fr]">
-        <aside className="bg-black h-full py-10 px-4 grid gap-y-14 min-h-screen content-start sticky top-0 left-0">
+        <aside className="bg-black h-full py-10 px-4 min-h-screen grid gap-y-14 content-start sticky top-0 left-0">
           <div>
             <svg
               width="163"
@@ -83,7 +91,7 @@ const Tasks = () => {
               <button className="text-2xl">
                 <AiOutlineAlignLeft />
               </button>
-              <p className="capitalize">Hi, {user.given_name}</p>
+              <p className="capitalize">Hi, Admin</p>
             </div>
 
             <button
@@ -96,75 +104,83 @@ const Tasks = () => {
             </button>
           </nav>
 
-          <section className="py-5 px-8">
-            <p className="mb-4">Your Tasks</p>
-            <div className="flex gap-x-4">
-              <button
-                className={`bg-white rounded-xl px-5 py-1 hover:bg-gray-900 hover:text-white ${
-                  assigned && "bg-gray-900 text-white"
-                } `}
-                onClick={() => setAssigned(true)}
-              >
-                Assigned
-              </button>
-              <button
-                className={`bg-white rounded-xl px-5 py-1 hover:bg-gray-900 hover:text-white ${
-                  !assigned && "bg-gray-900 text-white"
-                }`}
-                onClick={() => setAssigned(false)}
-              >
-                Completed
-              </button>
-            </div>
-            {tasks.length > 0 ? (
-              <div className="grid gap-y-4 mt-6">
-                {assigned
-                  ? tasks.map(({ deadline, description, _id, completed }) => {
-                      if (!completed) {
-                        return (
-                          <div
-                            key={_id}
-                            className="grid grid-cols-[auto_1fr_1fr_1fr] gap-x-5 items-center justify-between"
-                          >
-                            <GrTasks />
-                            <p>{description}</p>
-                            <p>{deadline}</p>
-                            <button
-                              className="bg-black text-white rounded-xl w-56"
-                              onClickCapture={() => handleMarkAsCompleted(_id)}
-                            >
-                              Mark as completed
-                            </button>
-                          </div>
-                        );
-                      }
-                    })
-                  : tasks.map(({ deadline, description, _id, completed }) => {
-                      if (completed) {
-                        return (
-                          <div
-                            key={_id}
-                            className="grid grid-cols-[auto_1fr_1fr_auto] gap-x-2 items-center justify-between"
-                          >
-                            <GrTasks />
-                            <p>{description}</p>
-                            <p>{deadline}</p>
-                            <p className="text-lg">
-                              <BsCheckCircleFill />
-                            </p>
-                          </div>
-                        );
-                      }
-                    })}
+          <div className="py-4 px-8">
+            <button className="flex items-center gap-x-2">
+              <IoChevronBackSharp /> Back
+            </button>
+
+            <form
+              className="w-1/2 mt-10 flex flex-col gap-y-4"
+              onSubmit={handleSubmit}
+            >
+              <h1 className="text-xl">Assign a Task</h1>
+              <div className="flex flex-col gap-y-1">
+                <label htmlFor="desc">Description</label>
+                <textarea
+                  rows={5}
+                  type="text"
+                  className="bg-transparent border-2 p-1 rounded-lg"
+                  placeholder="Description....."
+                  style={{ resize: "none" }}
+                  required
+                  value={values.desc}
+                  onChange={(e) =>
+                    setValues({ ...values, desc: e.target.value })
+                  }
+                />
               </div>
-            ) : (
-              <p className="mt-6">No tasks available</p>
-            )}
-          </section>
+
+              <div className="flex flex-col gap-y-1">
+                <label htmlFor="emp" className="block">
+                  Employee
+                </label>
+                <select
+                  name="emp"
+                  id="emp"
+                  className="w-full bg-transparent border-2 p-1"
+                  required
+                  value={values.emp}
+                  onChange={(e) =>
+                    setValues({ ...values, emp: e.target.value })
+                  }
+                >
+                  <option value="none">Employees</option>
+                  {employees.map(({ firstName, lastName, email, _id }) => {
+                    return (
+                      <option key={_id} value={email}>
+                        {firstName} {lastName}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+
+              <div className="flex flex-col gap-y-1">
+                <label htmlFor="deadline">Deadline</label>
+                <input
+                  type="date"
+                  name=""
+                  id="deadline"
+                  className="bg-transparent border-2 p-1"
+                  required
+                  value={values.deadline}
+                  onChange={(e) =>
+                    setValues({ ...values, deadline: e.target.value })
+                  }
+                />
+              </div>
+
+              <div>
+                <button className="bg-black text-white px-4 rounded-lg py-1 mt-3">
+                  Create Task
+                </button>
+              </div>
+            </form>
+          </div>
         </section>
       </section>
     </main>
   );
 };
 
-export default Tasks;
+export default Task;

@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { navLinks } from "../../utils/helper";
+import { CgArrowTopRight } from "react-icons/cg";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -32,10 +33,20 @@ const Navbar = () => {
 
         <div className="nav-links">
           <ul className="flex gap-x-12 items-center">
-            {navLinks.map(({ id, name, href }) => {
+            {navLinks.map(({ id, name, href }, index) => {
               return (
                 <li key={id}>
-                  <a href={href}>{name}</a>
+                  <a
+                    href={href}
+                    target={`${index === navLinks.length - 1 && "_blank"}`}
+                    className={`${
+                      index === navLinks.length - 1 &&
+                      "italic underline underline-offset-2"
+                    } flex items-center gap-x-1`}
+                  >
+                    {name}{" "}
+                    {index === navLinks.length - 1 && <CgArrowTopRight />}
+                  </a>
                 </li>
               );
             })}
