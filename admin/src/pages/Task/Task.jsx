@@ -1,5 +1,5 @@
 import { heroSidebarLinks } from "../../utils/helper";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineAlignLeft } from "react-icons/ai";
 import { useAuth0 } from "@auth0/auth0-react";
 import { IoChevronBackSharp } from "react-icons/io5";
@@ -10,6 +10,7 @@ const Task = () => {
   const { logout, user } = useAuth0();
   const [employees, setEmployees] = useState([]);
   const [values, setValues] = useState({ desc: "", emp: "none", deadline: "" });
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getEmployees = async () => {
@@ -105,7 +106,10 @@ const Task = () => {
           </nav>
 
           <div className="py-4 px-8">
-            <button className="flex items-center gap-x-2">
+            <button
+              className="flex items-center gap-x-2"
+              onClick={() => navigate(-1)}
+            >
               <IoChevronBackSharp /> Back
             </button>
 
@@ -113,9 +117,11 @@ const Task = () => {
               className="w-1/2 mt-10 flex flex-col gap-y-4"
               onSubmit={handleSubmit}
             >
-              <h1 className="text-xl">Assign a Task</h1>
+              <h1 className="text-2xl">Assign a Task</h1>
               <div className="flex flex-col gap-y-1">
-                <label htmlFor="desc">Description</label>
+                <label htmlFor="desc" className="text-gray-600">
+                  Description
+                </label>
                 <textarea
                   rows={5}
                   type="text"
@@ -131,7 +137,7 @@ const Task = () => {
               </div>
 
               <div className="flex flex-col gap-y-1">
-                <label htmlFor="emp" className="block">
+                <label htmlFor="emp" className="block text-gray-600">
                   Employee
                 </label>
                 <select
@@ -156,7 +162,9 @@ const Task = () => {
               </div>
 
               <div className="flex flex-col gap-y-1">
-                <label htmlFor="deadline">Deadline</label>
+                <label htmlFor="deadline" className="text-gray-600">
+                  Deadline
+                </label>
                 <input
                   type="date"
                   name=""

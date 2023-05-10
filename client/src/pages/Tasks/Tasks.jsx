@@ -12,25 +12,27 @@ const Tasks = () => {
   const [assigned, setAssigned] = useState(true);
   const [tasks, setTasks] = useState([]);
 
+  const getTasks = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://trainboot-server.onrender.com/tasks/${user.email}`
+      );
+      setTasks(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    const getTasks = async () => {
-      try {
-        const { data } = await axios.get(
-          `https://trainboot-server.onrender.com/tasks/${user.email}`
-        );
-        setTasks(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
     getTasks();
-  }, [tasks]);
+  }, [assigned]);
 
   const handleMarkAsCompleted = async (id) => {
     try {
       await axios.post(`https://trainboot-server.onrender.com/tasks/complete`, {
         id,
       });
+      getTasks();
     } catch (error) {
       console.log(error);
     }
@@ -100,16 +102,16 @@ const Tasks = () => {
             <p className="mb-4">Your Tasks</p>
             <div className="flex gap-x-4">
               <button
-                className={`bg-white rounded-xl px-5 py-1 hover:bg-gray-900 hover:text-white ${
-                  assigned && "bg-gray-900 text-white"
+                className={`rounded-xl px-5 py-1 hover:bg-gray-900 hover:text-white ${
+                  assigned ? "bg-black text-white" : "bg-white"
                 } `}
                 onClick={() => setAssigned(true)}
               >
                 Assigned
               </button>
               <button
-                className={`bg-white rounded-xl px-5 py-1 hover:bg-gray-900 hover:text-white ${
-                  !assigned && "bg-gray-900 text-white"
+                className={`rounded-xl px-5 py-1 hover:bg-gray-900 hover:text-white ${
+                  !assigned ? "bg-gray-900 text-white" : "bg-white"
                 }`}
                 onClick={() => setAssigned(false)}
               >

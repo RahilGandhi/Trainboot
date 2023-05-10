@@ -32,7 +32,7 @@ const Player = () => {
     try {
       await axios.post(
         "https://trainboot-server.onrender.com/trainings/finishTraining",
-        { email: user.email, training_id: id }
+        { email: user.email, id }
       );
     } catch (error) {
       console.log(error);

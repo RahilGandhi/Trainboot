@@ -19,6 +19,7 @@ const Dashboard = () => {
       const { data } = await axios.get(
         "https://trainboot-server.onrender.com/trainings/all"
       );
+      console.log(data);
       setVideoDetails([...data]);
     };
     getVideos();
@@ -52,7 +53,7 @@ const Dashboard = () => {
     try {
       await axios.post(
         "https://trainboot-server.onrender.com/trainings/startTraining",
-        { email: user.email, training_id: tid }
+        { email: user.email, id: tid }
       );
       navigate(`/dashboard/${tid}`);
     } catch (error) {
@@ -266,13 +267,10 @@ const Dashboard = () => {
 
                 <div className="flex flex-col gap-y-4">
                   {videoDetails.map(
-                    (
-                      { training_id, name, instructor, thumbnail, duration },
-                      index
-                    ) => {
+                    ({ _id, name, instructor, thumbnail, duration }) => {
                       return (
                         <div
-                          key={training_id}
+                          key={_id}
                           className="flex bg-white gap-x-4 rounded-lg p-2"
                         >
                           <img
@@ -291,7 +289,7 @@ const Dashboard = () => {
                             <button
                               // to={`/dashboard/${training_id}`}
                               className="bg-[#102844] text-white w-52 rounded-2xl mt-1 py-2 text-md text-center"
-                              onClick={() => handleStartTraining(training_id)}
+                              onClick={() => handleStartTraining(_id)}
                             >
                               Start Training
                             </button>
