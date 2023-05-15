@@ -79,9 +79,10 @@ const Employees = () => {
 
             <button
               className="btn text-white"
-              onClick={() =>
-                logout({ logoutParams: { returnTo: window.location.origin } })
-              }
+              onClick={() => {
+                logout({ logoutParams: { returnTo: window.location.origin } });
+                localStorage.clear();
+              }}
             >
               logout
             </button>
