@@ -94,11 +94,11 @@ const Discover = () => {
                     key={uid()}
                     className="grid grid-cols-[auto_1fr_1fr_auto] items-center bg-white gap-x-4 p-2 rounded-xl"
                   >
-                    <div className="bg-black text-white rounded-[50%] p-2">
+                    <div className="bg-black text-white rounded-[50%] p-2 uppercase">
                       {firstName.charAt(0)}
                       {lastName.charAt(0)}
                     </div>
-                    <p className="text-lg">
+                    <p className="text-lg capitalize">
                       {firstName} {lastName}
                     </p>
                     <p>{deptName}</p>

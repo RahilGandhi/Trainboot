@@ -119,44 +119,52 @@ const Employees = () => {
                           className="bg-white rounded-lg py-4 px-4"
                         >
                           <div className="flex gap-x-2 items-center">
-                            <h1 className="text-xl">
+                            <h1 className="text-xl capitalize">
                               {firstName} {lastName}
                             </h1>
-                            -<p>{deptName}</p> -<p>{deptId}</p> - <p>{email}</p>
+                            -<p>{email}</p>
                           </div>
 
                           <div className="mt-2">
                             <h1 className="mb-1 text-gray-600">
                               Completed Trainings -{" "}
                             </h1>
-                            {completedTrainings.map(({ name, _id }) => {
-                              return (
-                                <div
-                                  key={_id}
-                                  className="flex items-center gap-x-1 ml-5"
-                                >
-                                  <BsCheckCircleFill className="text-green-500" />
-                                  <p>{name}</p>
-                                </div>
-                              );
-                            })}
+                            {completedTrainings.length > 0 ? (
+                              completedTrainings.map(({ name, _id }) => {
+                                return (
+                                  <div
+                                    key={_id}
+                                    className="flex items-center gap-x-1 ml-5"
+                                  >
+                                    <BsCheckCircleFill className="text-green-500" />
+                                    <p>{name}</p>
+                                  </div>
+                                );
+                              })
+                            ) : (
+                              <p className="ml-5">{0}</p>
+                            )}
                           </div>
 
                           <div className="mt-2">
                             <h1 className="mb-1 text-gray-600">
                               Ongoing Trainings -{" "}
                             </h1>
-                            {ongoingTrainings.map(({ name, _id }) => {
-                              return (
-                                <div
-                                  key={_id}
-                                  className="flex items-center gap-x-1 ml-5"
-                                >
-                                  <AiFillExclamationCircle className="text-yellow-600" />
-                                  <p>{name}</p>
-                                </div>
-                              );
-                            })}
+                            {ongoingTrainings.length > 0 ? (
+                              ongoingTrainings.map(({ name, _id }) => {
+                                return (
+                                  <div
+                                    key={_id}
+                                    className="flex items-center gap-x-1 ml-5"
+                                  >
+                                    <AiFillExclamationCircle className="text-yellow-600" />
+                                    <p>{name}</p>
+                                  </div>
+                                );
+                              })
+                            ) : (
+                              <p className="ml-5">{0}</p>
+                            )}
                           </div>
 
                           <div className="mt-2">

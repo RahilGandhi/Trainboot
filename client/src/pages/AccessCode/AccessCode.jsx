@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
+import { AiFillBulb } from "react-icons/ai";
 
 const AccessCode = () => {
   const refContainer = useRef(null);
@@ -628,10 +629,15 @@ const AccessCode = () => {
         </header>
 
         <form
-          className="grid justify-center text-center gap-y-6"
+          className="grid justify-center text-center gap-y-4"
           onSubmit={handleSubmit}
         >
           <h3 className="italic">Enter Access Code to Login</h3>
+          <h3 className="italic">Access Code - PSA001</h3>
+          <div className="flex items-center gap-x-2 bg-[#ffc107] rounded-md">
+            <AiFillBulb />
+            Access code will be hidden in the final production.
+          </div>
           <div className="flex my-0 mx-auto gap-x-3">
             {input.map((item, idx) => {
               return (

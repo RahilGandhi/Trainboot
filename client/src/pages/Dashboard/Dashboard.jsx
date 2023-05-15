@@ -12,7 +12,6 @@ const Dashboard = () => {
   const [videoDetails, setVideoDetails] = useState([]);
   const [trainngsAnalysis, setTrainngsAnalysis] = useState({});
   const [announcements, setAnnouncements] = useState([]);
-  console.log(user);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -282,40 +281,118 @@ const Dashboard = () => {
 
             <div className="grid grid-cols-[3fr_1fr] gap-x-10">
               <div>
-                <h1 className="text-xl mb-5 text-[#1E1E1E]">Trainings</h1>
+                <h1 className="text-xl mb-5 text-[#1E1E1E]">Trainings - </h1>
 
                 <div className="flex flex-col gap-y-4">
-                  {videoDetails.map(
-                    ({ _id, name, instructor, thumbnail, duration }) => {
-                      return (
-                        <div
-                          key={_id}
-                          className="flex bg-white gap-x-4 rounded-lg p-2"
-                        >
-                          <img
-                            className="w-48 rounded-lg object-cover"
-                            src={thumbnail}
-                            alt=""
-                          />
-                          <div className="flex flex-col gap-y-2">
-                            <p className="text-md font-semibold">{name}</p>
-                            <p className="text-grey-secondary text-sm">
-                              Instructor: {instructor}
-                            </p>
-                            <p className="text-grey-secondary text-sm">
-                              Duration : {duration}
-                            </p>
-                            <button
-                              // to={`/dashboard/${training_id}`}
-                              className="bg-[#102844] text-white w-52 rounded-2xl mt-1 py-2 text-md text-center"
-                              onClick={() => handleStartTraining(_id)}
-                            >
-                              Start Training
-                            </button>
+                  {videoDetails.length > 0 ? (
+                    videoDetails.map(
+                      ({ _id, name, instructor, thumbnail, duration }) => {
+                        return (
+                          <div
+                            key={_id}
+                            className="flex bg-white gap-x-4 rounded-lg p-2"
+                          >
+                            <img
+                              className="w-48 rounded-lg object-cover"
+                              src={thumbnail}
+                              alt=""
+                            />
+                            <div className="flex flex-col gap-y-2">
+                              <p className="text-md font-semibold">{name}</p>
+                              <p className="text-grey-secondary text-sm">
+                                Instructor: {instructor}
+                              </p>
+                              <p className="text-grey-secondary text-sm">
+                                Duration : {duration}
+                              </p>
+                              <button
+                                // to={`/dashboard/${training_id}`}
+                                className="bg-[#102844] text-white w-52 rounded-2xl mt-1 py-2 text-md text-center"
+                                onClick={() => handleStartTraining(_id)}
+                              >
+                                Start Training
+                              </button>
+                            </div>
                           </div>
-                        </div>
-                      );
-                    }
+                        );
+                      }
+                    )
+                  ) : (
+                    <div className="flex justify-center items-center text-2xl">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlnsXlink="http://www.w3.org/1999/xlink"
+                        width="100px"
+                        height="100px"
+                        viewBox="0 0 100 100"
+                        preserveAspectRatio="xMidYMid"
+                      >
+                        <g transform="translate(50,50)">
+                          <circle
+                            cx="0"
+                            cy="0"
+                            r="20"
+                            fill="none"
+                            stroke="#000"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                          >
+                            <animateTransform
+                              attributeName="transform"
+                              type="rotate"
+                              from="0 0 0"
+                              to="360 0 0"
+                              dur="1s"
+                              repeatCount="indefinite"
+                            />
+                            <animate
+                              attributeName="stroke-opacity"
+                              values="1;0"
+                              dur="1s"
+                              repeatCount="indefinite"
+                            />
+                            <animate
+                              attributeName="stroke-width"
+                              values="2;0"
+                              dur="1s"
+                              repeatCount="indefinite"
+                            />
+                          </circle>
+                          <circle
+                            cx="0"
+                            cy="0"
+                            r="30"
+                            fill="none"
+                            stroke="#888"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            transform="rotate(45)"
+                          >
+                            <animateTransform
+                              attributeName="transform"
+                              type="rotate"
+                              from="0 0 0"
+                              to="360 0 0"
+                              dur="2s"
+                              repeatCount="indefinite"
+                            />
+                            <animate
+                              attributeName="stroke-opacity"
+                              values="1;0"
+                              dur="2s"
+                              repeatCount="indefinite"
+                            />
+                            <animate
+                              attributeName="stroke-width"
+                              values="2;0"
+                              dur="2s"
+                              repeatCount="indefinite"
+                            />
+                          </circle>
+                        </g>
+                      </svg>
+                      <p className="text-lg">Loading Trainings...</p>
+                    </div>
                   )}
                 </div>
               </div>
