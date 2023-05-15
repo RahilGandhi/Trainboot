@@ -17,7 +17,7 @@ const Employees = () => {
     const getEmployees = async () => {
       try {
         const { data } = await axios.get(
-          "https://trainboot-server.onrender.com/employees/all"
+          `${process.env.REACT_APP_BASE_URL}/employees/all`
         );
         setUsers(data);
       } catch (error) {

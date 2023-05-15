@@ -14,7 +14,7 @@ const Dashboard = () => {
     const getAnalysis = async () => {
       try {
         const { data } = await axios.get(
-          "https://trainboot-server.onrender.com/admin/init"
+          `${process.env.REACT_APP_BASE_URL}/admin/init`
         );
         setTrainingAnalysis(data);
       } catch (error) {

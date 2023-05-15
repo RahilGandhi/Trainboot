@@ -16,7 +16,7 @@ const Task = () => {
     const getEmployees = async () => {
       try {
         const { data } = await axios.get(
-          "https://trainboot-server.onrender.com/employees/all"
+          `${process.env.REACT_APP_BASE_URL}/employees/all`
         );
         setEmployees(data);
       } catch (error) {
@@ -31,14 +31,11 @@ const Task = () => {
     if (values.emp === "none") return;
 
     try {
-      await axios.post(
-        "https://trainboot-server.onrender.com/tasks/createTask",
-        {
-          description: values.desc,
-          assignedTo: values.emp,
-          deadline: values.deadline,
-        }
-      );
+      await axios.post(`${process.env.REACT_APP_BASE_URL}/tasks/createTask`, {
+        description: values.desc,
+        assignedTo: values.emp,
+        deadline: values.deadline,
+      });
       setValues({ desc: "", emp: "none", deadline: "" });
     } catch (error) {
       console.log(error);

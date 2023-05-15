@@ -17,7 +17,7 @@ const Player = () => {
   useEffect(() => {
     const getVideo = async () => {
       const { data } = await axios.get(
-        `https://trainboot-server.onrender.com/trainings/${id}`,
+        `${process.env.REACT_APP_BASE_URL}/trainings/${id}`,
         {
           email: user.email,
           training_id: id,
@@ -31,7 +31,7 @@ const Player = () => {
   const handleCompleteTrainng = async () => {
     try {
       await axios.post(
-        "https://trainboot-server.onrender.com/trainings/finishTraining",
+        `${process.env.REACT_APP_BASE_URL}/trainings/finishTraining`,
         { email: user.email, id }
       );
     } catch (error) {

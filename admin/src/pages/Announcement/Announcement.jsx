@@ -20,7 +20,7 @@ const Announcement = () => {
     e.preventDefault();
     try {
       await axios.post(
-        "https://trainboot-server.onrender.com/announcements/create",
+        `${process.env.REACT_APP_BASE_URL}/announcements/create`,
         {
           title: values.title,
           date: moment(values.deadline).format("DD-MM-YY"),

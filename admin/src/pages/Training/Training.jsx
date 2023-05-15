@@ -21,7 +21,7 @@ const Training = () => {
     e.preventDefault();
     try {
       await axios.post(
-        "https://trainboot-server.onrender.com/trainings/createTraining",
+        `${process.env.REACT_APP_BASE_URL}/trainings/createTraining`,
         {
           name: values.title,
           instructor: values.instructor,

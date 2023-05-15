@@ -12,12 +12,30 @@ const Dashboard = () => {
   const [videoDetails, setVideoDetails] = useState([]);
   const [trainngsAnalysis, setTrainngsAnalysis] = useState({});
   const [announcements, setAnnouncements] = useState([]);
+  console.log(user);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const addEmployeeToDB = async () => {
+      const userExists = JSON.parse(localStorage.getItem("user"));
+      if (userExists) return;
+
+      await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/employees/addEmployee`,
+        {
+          firstName: user.given_name,
+          lastName: user.family_name,
+          email: user.email,
+        }
+      );
+      localStorage.setItem("user", JSON.stringify(user));
+    };
+  }, []);
 
   useEffect(() => {
     const getVideos = async () => {
       const { data } = await axios.get(
-        "https://trainboot-server.onrender.com/trainings/all"
+        `${process.env.REACT_APP_BASE_URL}/trainings/all`
       );
       setVideoDetails([...data]);
     };
@@ -27,7 +45,7 @@ const Dashboard = () => {
   useEffect(() => {
     const getAnalysis = async () => {
       const { data } = await axios.get(
-        `https://trainboot-server.onrender.com/employees/getOne/${user.email}`
+        `${process.env.REACT_APP_BASE_URL}/employees/getOne/${user.email}`
       );
       setTrainngsAnalysis({ ...data });
     };
@@ -38,7 +56,7 @@ const Dashboard = () => {
     const getAnnouncements = async () => {
       try {
         const { data } = await axios.get(
-          "https://trainboot-server.onrender.com/announcements/all"
+          `${process.env.REACT_APP_BASE_URL}/announcements/all`
         );
         setAnnouncements(data);
       } catch (error) {
@@ -51,7 +69,7 @@ const Dashboard = () => {
   const handleStartTraining = async (tid) => {
     try {
       await axios.post(
-        "https://trainboot-server.onrender.com/trainings/startTraining",
+        `${process.env.REACT_APP_BASE_URL}/trainings/startTraining`,
         { email: user.email, id: tid }
       );
       navigate(`/dashboard/${tid}`);

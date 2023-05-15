@@ -15,7 +15,7 @@ const Tasks = () => {
   const getTasks = async () => {
     try {
       const { data } = await axios.get(
-        `https://trainboot-server.onrender.com/tasks/${user.email}`
+        `${process.env.REACT_APP_BASE_URL}/tasks/${user.email}`
       );
       setTasks(data);
     } catch (error) {
@@ -29,7 +29,7 @@ const Tasks = () => {
 
   const handleMarkAsCompleted = async (id) => {
     try {
-      await axios.post(`https://trainboot-server.onrender.com/tasks/complete`, {
+      await axios.post(`${process.env.REACT_APP_BASE_URL}/tasks/complete`, {
         id,
       });
       getTasks();
