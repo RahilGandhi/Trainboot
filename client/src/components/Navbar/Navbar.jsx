@@ -38,14 +38,20 @@ const Navbar = () => {
                 <li key={id}>
                   <a
                     href={href}
-                    target={`${index === navLinks.length - 1 && "_blank"}`}
+                    target={`${
+                      (index === navLinks.length - 1 ||
+                        index === navLinks.length - 2) &&
+                      "_blank"
+                    }`}
                     className={`${
-                      index === navLinks.length - 1 &&
+                      (index === navLinks.length - 1 ||
+                        index === navLinks.length - 2) &&
                       "italic underline underline-offset-2"
                     } flex items-center gap-x-1`}
                   >
                     {name}{" "}
-                    {index === navLinks.length - 1 && <CgArrowTopRight />}
+                    {(index === navLinks.length - 1 ||
+                      index === navLinks.length - 2) && <CgArrowTopRight />}
                   </a>
                 </li>
               );

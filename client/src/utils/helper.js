@@ -17,8 +17,8 @@ export const navLinks = [
   },
   {
     id: uid(),
-    name: "product",
-    href: "/product",
+    name: "Docs",
+    href: "https://trainboot.notion.site/Trainboot-3f45e744b3d94655a538ca39d2e2fe72",
   },
 
   {

@@ -2,6 +2,7 @@ import { navLinks } from "../../utils/helper";
 import { FaTimes } from "react-icons/fa";
 import { useGlobalAppContext } from "../../context/AppContext";
 import { useNavigate } from "react-router-dom";
+import { CgArrowTopRight } from "react-icons/cg";
 
 const Sidebar = () => {
   const {
@@ -46,10 +47,29 @@ const Sidebar = () => {
 
           <div className="sidebar-links  mt-12">
             <ul className="flex flex-col gap-y-6">
-              {navLinks.map(({ id, name, href }) => {
+              {navLinks.map(({ id, name, href }, index) => {
                 return (
-                  <li key={id}>
-                    <a href={href}>{name}</a>
+                  <li
+                    key={id}
+                    className={
+                      (index === navLinks.length - 1 ||
+                        index === navLinks.length - 2) &&
+                      "underline"
+                    }
+                  >
+                    <a
+                      href={href}
+                      className="flex items-center gap-x-1"
+                      target={`${
+                        (index === navLinks.length - 1 ||
+                          index === navLinks.length - 2) &&
+                        "_blank"
+                      }`}
+                    >
+                      {name}
+                      {(index === navLinks.length - 1 ||
+                        index === navLinks.length - 2) && <CgArrowTopRight />}
+                    </a>
                   </li>
                 );
               })}
