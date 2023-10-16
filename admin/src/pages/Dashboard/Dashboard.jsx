@@ -86,7 +86,7 @@ const Dashboard = () => {
           </nav>
 
           <div className="py-4 px-8">
-            <div className="grid grid-cols-4 gap-x-5 mb-20">
+            <div className="grid grid-cols-4 gap-x-5 mb-8">
               <div className="bg-white rounded-xl px-5 py-8">
                 <div className="flex items-center gap-x-4">
                   <svg
@@ -273,7 +273,7 @@ const Dashboard = () => {
 
             <div>
               <h1>Quick Actions</h1>
-              <section className="grid gap-y-3 content-start bg-white mt-4 min-h-[25rem] rounded-lg p-5">
+              <section className="grid gap-y-3 content-start bg-white mt-4 min-h-[20rem] rounded-lg p-5">
                 {quickActionCards.map(({ id, name, icon, href }) => {
                   return (
                     <div

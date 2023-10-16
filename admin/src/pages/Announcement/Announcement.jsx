@@ -115,7 +115,7 @@ const Announcement = () => {
                 <label htmlFor="title">Title</label>
                 <input
                   type="text"
-                  className="bg-transparent border-2 p-1 rounded-lg"
+                  className="bg-white border-2 p-2 rounded-lg"
                   placeholder="Title"
                   required
                   value={values.title}
@@ -132,7 +132,7 @@ const Announcement = () => {
                   id="time"
                   value={values.time}
                   required
-                  className="bg-transparent border-2 p-1 rounded-lg"
+                  className="bg-white border-2 p-2 rounded-lg"
                   onChange={(e) =>
                     setValues({ ...values, time: e.target.value })
                   }
@@ -145,7 +145,7 @@ const Announcement = () => {
                   type="date"
                   name=""
                   id="deadline"
-                  className="bg-transparent border-2 p-1"
+                  className="bg-white border-2 p-2 rounded-lg"
                   required
                   value={values.deadline}
                   onChange={(e) =>
@@ -155,7 +155,7 @@ const Announcement = () => {
               </div>
 
               <div>
-                <button className="bg-black text-white px-4 rounded-lg py-1 mt-3">
+                <button className="bg-black text-white px-4 rounded-lg py-2 mt-3">
                   Create Announcement
                 </button>
               </div>

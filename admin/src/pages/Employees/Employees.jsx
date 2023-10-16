@@ -119,22 +119,22 @@ const Employees = () => {
                           className="bg-white rounded-lg py-4 px-4"
                         >
                           <div className="flex gap-x-2 items-center">
-                            <h1 className="text-xl capitalize">
+                            <h1 className="text-xl capitalize font-semibold">
                               {firstName} {lastName}
                             </h1>
                             -<p>{email}</p>
                           </div>
-
+                          <div className="flex gap-32">
                           <div className="mt-2">
                             <h1 className="mb-1 text-gray-600">
-                              Completed Trainings -{" "}
+                              Completed Trainings
                             </h1>
                             {completedTrainings.length > 0 ? (
                               completedTrainings.map(({ name, _id }) => {
                                 return (
                                   <div
                                     key={_id}
-                                    className="flex items-center gap-x-1 ml-5"
+                                    className="flex items-center gap-x-1 "
                                   >
                                     <BsCheckCircleFill className="text-green-500" />
                                     <p>{name}</p>
@@ -142,20 +142,20 @@ const Employees = () => {
                                 );
                               })
                             ) : (
-                              <p className="ml-5">{0}</p>
+                              <p>{0}</p>
                             )}
                           </div>
 
                           <div className="mt-2">
                             <h1 className="mb-1 text-gray-600">
-                              Ongoing Trainings -{" "}
+                              Ongoing Trainings
                             </h1>
                             {ongoingTrainings.length > 0 ? (
                               ongoingTrainings.map(({ name, _id }) => {
                                 return (
                                   <div
                                     key={_id}
-                                    className="flex items-center gap-x-1 ml-5"
+                                    className="flex items-center gap-x-1"
                                   >
                                     <AiFillExclamationCircle className="text-yellow-600" />
                                     <p>{name}</p>
@@ -163,15 +163,16 @@ const Employees = () => {
                                 );
                               })
                             ) : (
-                              <p className="ml-5">{0}</p>
+                              <p>{0}</p>
                             )}
                           </div>
 
                           <div className="mt-2">
                             <h1 className="mb-1 text-gray-600">
-                              Tasks Completed -{" "}
+                              Tasks Completed
                             </h1>
-                            <p className="ml-5">{tasksCompleted}</p>
+                            <p>{tasksCompleted}</p>
+                          </div>
                           </div>
                         </div>
                       );

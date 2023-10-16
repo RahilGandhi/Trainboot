@@ -123,7 +123,7 @@ const Task = () => {
                 <textarea
                   rows={5}
                   type="text"
-                  className="bg-transparent border-2 p-1 rounded-lg"
+                  className="bg-white border-2 p-2 rounded-lg"
                   placeholder="Description....."
                   style={{ resize: "none" }}
                   required
@@ -141,7 +141,7 @@ const Task = () => {
                 <select
                   name="emp"
                   id="emp"
-                  className="w-full bg-transparent border-2 p-1"
+                  className="w-full bg-white border-2 p-2 rounded-lg"
                   required
                   value={values.emp}
                   onChange={(e) =>
@@ -167,7 +167,7 @@ const Task = () => {
                   type="date"
                   name=""
                   id="deadline"
-                  className="bg-transparent border-2 p-1"
+                  className="bg-white border-2 p-2 rounded-lg"
                   required
                   value={values.deadline}
                   onChange={(e) =>
@@ -177,7 +177,7 @@ const Task = () => {
               </div>
 
               <div>
-                <button className="bg-black text-white px-4 rounded-lg py-1 mt-3">
+                <button className="bg-black text-white px-4 rounded-lg py-2 mt-3">
                   Create Task
                 </button>
               </div>

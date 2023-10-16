@@ -123,7 +123,7 @@ const Training = () => {
                 <input
                   type="text"
                   id="title"
-                  className="bg-transparent border-2 p-1 rounded-lg"
+                  className="bg-white border-2 p-2 rounded-lg"
                   placeholder="Title"
                   required
                   value={values.title}
@@ -141,7 +141,7 @@ const Training = () => {
                   <input
                     type="text"
                     id="ins"
-                    className="bg-transparent border-2 p-1 rounded-lg"
+                    className="bg-white border-2 p-2 rounded-lg"
                     placeholder="Instructor"
                     required
                     value={values.instructor}
@@ -158,7 +158,7 @@ const Training = () => {
                   <input
                     type="text"
                     id="thumb"
-                    className="bg-transparent border-2 p-1 rounded-lg"
+                    className="bg-white border-2 p-2 rounded-lg"
                     placeholder="Thumbnail"
                     required
                     value={values.thumbnail}
@@ -176,7 +176,7 @@ const Training = () => {
                 <input
                   type="text"
                   id="src"
-                  className="bg-transparent border-2 p-1 rounded-lg"
+                  className="bg-white border-2 p-2 rounded-lg"
                   placeholder="Source"
                   required
                   value={values.src}
@@ -194,7 +194,7 @@ const Training = () => {
                   rows={5}
                   type="text"
                   id="src"
-                  className="bg-transparent border-2 p-1 rounded-lg"
+                  className="bg-white border-2 p-2 rounded-lg"
                   placeholder="Summary...."
                   required
                   value={values.summary}
